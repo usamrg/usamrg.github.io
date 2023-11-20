@@ -1,0 +1,153 @@
+body{
+    font-family: "Microsoft YaHei", sans-serif;
+    margin: 0;
+    padding: 0;
+}
+.agency {
+    padding: 5.13vw 3.85vw 2.82vw;
+    background-image: linear-gradient(180deg,#016cc1,hsla(0,0%,97.3%,.5));
+    min-height: calc(100vh - var(--window-top));
+    box-sizing: border-box;
+    height: 100vh;
+}
+.result {
+    color: #fff;
+    text-align: center;
+    font-size: 5.13vw;
+    margin-bottom: 5.13vw;
+}
+.content-card-tz{
+    background-color: #fff;
+    border-radius: 1.79vw;
+    padding: 5.13vw 1.54vw 20vw;
+}
+.content_img{
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    height: 113.33vw;
+}
+.swiper-all{
+    height: 113.33vw;
+    width: 100%;
+}
+.swiper-all .swiper{
+    height: 100%;
+    text-align: center;
+}
+.swiper-all .swiper .swiper-img-z{
+    width: 100%;
+    position: relative;
+}
+.content_img img{
+    width: 100%;
+}
+
+.swiper-all .swiper .swiper-img-z .swiper-img-f{
+    margin-top: 1.2vw;
+}
+
+.swiper-all .swiper .cert-img img {
+    width: 22%;
+    height: 21.1%;
+    position: absolute;
+    top: 8.5%;
+    left: 9.5%;
+    z-index: 999;
+}
+.swiper-all .swiper .numstyle {
+    position: absolute;
+    font-size: 3.33vw;
+    z-index: 999;
+    left: 34%;
+    top: 9.5%;
+}
+.swiper-all .swiper .namestyle {
+    position: absolute;
+    font-size: 2.56vw;
+    z-index: 999;
+    left: 34%;
+    top: 15.5%;
+}
+.swiper-all .swiper .jobtype{
+    position: absolute;
+    font-size: 2.31vw;
+    line-height: 5.13vw;
+    z-index: 999;
+    left: 62.5%;
+    top: 15%;
+    width: 29%;
+    display: inline-block;
+    text-align: left;
+}
+.swiper-all .swiper .gender{
+    position: absolute;
+    font-size: 2.56vw;
+    z-index: 999;
+    left: 34%;
+    top: 23.5%;
+}
+.swiper-all .swiper .operItem {
+    position: absolute;
+    font-size: 2.56vw;
+    line-height: 3.08vw;
+    z-index: 999;
+    left: 62.5%;
+    top: 23.5%;
+    width: 30%;
+    display: inline-block;
+    text-align: left;
+}
+.swiper-all .swiper .firstTime {
+    position: absolute;
+    top: 34.2%;
+    left: 9%;
+    font-size: 2.82vw;
+    z-index: 999;
+}
+.swiper-all .swiper .validity {
+    position: absolute;
+    top: 34%;
+    left: 32%;
+    font-size: 2.82vw;
+    z-index: 999;
+}
+.swiper-all .swiper .againAuditTime {
+    position: absolute;
+    top: 40%;
+    left: 9%;
+    font-size: 2.82vw;
+    z-index: 999;
+}
+.swiper-all .swiper .unit {
+    position: absolute;
+    top: 40%;
+    left: 32%;
+    font-size: 2.82vw;
+    z-index: 999;
+}
+.swiper-all .swiper .msg-code img {
+    width: 17%;
+    height: 13.1%;
+    position: absolute;
+    right: 10%;
+    top: 31%;
+    z-index: 999;
+}
+.wordStyle {
+    font-size: 3.85vw;
+    display: inline-block;
+    text-align: left;
+    margin-top: 1.2vw;
+}
+.bottom {
+    margin-bottom: 0;
+}
+.box_bottom {
+    text-align: center;
+    color: #999;
+    padding-top: 2.56vw;
+    font-size: 2.56vw;
+    line-height: 5.13vw;
+    margin-bottom: 3.85vw;
+}
