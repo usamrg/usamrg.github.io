@@ -50,6 +50,7 @@
     <script src="./js/moment.min.js"></script>
     <script src="./js/jr-qrcode.js"></script>
     <script>
+
         function getUrlParam(name){
             var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
             var r = window.location.search.substr(1).match(reg);
@@ -132,6 +133,7 @@
         }
 
         getData(getUrlParam("j").toLowerCase());
+        
     </script>
 
 </html>
