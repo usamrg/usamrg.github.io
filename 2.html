@@ -1,0 +1,139 @@
+<html lang="zh">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, viewport-fit=cover">
+        <title></title>
+        <link rel="stylesheet" href="./css/index.css?v0.0.5">
+    </head>
+
+    <body>
+        <div class="agency">
+            <div class="result"></div>
+            <div class="content-card-tz">
+                <div class="content_img">
+                    <div class="swiper-all">
+                        <div class="swiper">
+                            <div class="swiper-img-z">
+                                <div>
+                                    <img alt="" src="./img/yj1jhyt.jpg">
+                                </div>
+                                <div class="swiper-img-f">
+                                    <img alt="" src="./img/yjfjhyt.jpg">
+                                </div>
+                                <div class="cert-img"><img class="certImg" alt="" src=""></div>
+                                <div class="numstyle"></div>
+                                <div class="namestyle"></div>
+                                <div class="jobtype"></div>
+                                <div class="gender"></div>
+                                <div class="operItem"></div>
+                                <div class="firstTime"></div>
+                                <div class="validity"></div>
+                                <div class="againAuditTime"></div>
+                                <div class="unit"></div>
+                                <div class="msg-code"><img class="msgCodeImg" alt="" src=""></div>
+                            </div>
+                            <div class="wordStyle"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="box_bottom bottom">
+                <div>主办单位：中华人民共和国应急管理部</div>
+                <div>承办单位：应急管理部干部培训学院（应急管理部党校）</div>
+                <div>技术支持：浪潮软件股份有限公司</div>
+                <div>备案号：京ICP备18056520号-2</div>
+            </div>
+        </div>
+    </body>
+
+    <script src="./js/moment.min.js"></script>
+    <script src="./js/jr-qrcode.js"></script>
+    <script>
+
+        function getUrlParam(name){
+            var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+            var r = window.location.search.substr(1).match(reg);
+            if(r != null) {
+                return decodeURI(r[2]);
+            }
+            return null;
+        }
+
+        function getJsonParam(json,name){
+            return json[name];
+        }
+
+        function getData(jsonName){
+
+            var url = "./hsejson/"+jsonName+".json";
+            var request = new XMLHttpRequest();
+
+            request.open("get",url);
+            request.send(null);
+            request.onload = function (){
+                if (request.status === 200){
+
+                    var title;//标题
+                    var divTitle; //div标题
+                    var certImg; //头像
+                    var idNum; //身份证号
+                    var cardName; //名字
+                    var jobType; //作业类别（电工作业）
+                    var gender; //性别
+                    var operItem; //操作项目（低压电工作业）
+                    var firstTime; //初领日期（2022-01-15）
+                    var validity; //有效期（2022-01-15至2028-01-14）
+                    var againAuditTime; //复审日期（2022-01-15前）
+                    var wordStyle; //复审日期2（备注：本证书应于2025-01-14前进行复审）
+                    var unit; //签发机关 （湖北省应急管理厅）
+                    var msgCodeImg;
+
+                    var json = JSON.parse(request.responseText);
+
+                    var me = getUrlParam("me");
+                    title = me?"我的证书":"扫码查询"
+                    divTitle= me?"我的证书":"证书扫码结果"
+                    idNum = "JHYTJH"+(me?getJsonParam(json,"i"):getJsonParam(json,"i").replace(/(\w{6})\w*(\w{4})/, '$1********$2'));
+                    cardName = getJsonParam(json,"n")
+                    jobType = getJsonParam(json,"j");
+                    gender = getJsonParam(json,"g")==="1"?"男":"女";
+                    operItem = getJsonParam(json,"o");
+                    unit = getJsonParam(json,"u");
+                    certImg = getJsonParam(json,"c");
+                    //开始算时间
+                    firstTime = getJsonParam(json,"t");
+                    var date = new Date(firstTime).getTime();
+                    validity = firstTime+"至"+moment(new Date(date+(86400000*365*6))).format('YYYY-MM-DD');
+                    var reexamineTime = moment(new Date(date+(86400000*365*3))).format('YYYY-MM-DD');
+                    againAuditTime = reexamineTime+"前"
+                    wordStyle = "备注：本证书应于"+reexamineTime+"前进行复审";
+                    //结束算时间
+
+                    //二维码
+                    var codeUrl = window.location.protocol+"//"+window.location.host+"/2.html?j="+jsonName;
+                    msgCodeImg = jrQrcode.getQrBase64(codeUrl);
+
+                    document.title = title;
+                    document.getElementsByClassName("result")[0].innerHTML = divTitle;
+                    document.getElementsByClassName("certImg")[0].src = certImg;
+                    document.getElementsByClassName("numstyle")[0].innerHTML = idNum;
+                    document.getElementsByClassName("namestyle")[0].innerHTML = cardName;
+                    document.getElementsByClassName("jobtype")[0].innerHTML = jobType;
+                    document.getElementsByClassName("gender")[0].innerHTML = gender;
+                    document.getElementsByClassName("operItem")[0].innerHTML = operItem;
+                    document.getElementsByClassName("firstTime")[0].innerHTML = firstTime;
+                    document.getElementsByClassName("validity")[0].innerHTML = validity;
+                    document.getElementsByClassName("againAuditTime")[0].innerHTML = againAuditTime;
+                    document.getElementsByClassName("wordStyle")[0].innerHTML = wordStyle;
+                    document.getElementsByClassName("unit")[0].innerHTML = unit;
+                    document.getElementsByClassName("msgCodeImg")[0].src = msgCodeImg;
+                }
+            }
+        }
+
+        getData(getUrlParam("j").toLowerCase());
+        
+    </script>
+
+</html>
