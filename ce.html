@@ -132,6 +132,8 @@
             line-height: 0.9cm;
         }
     </style>
+    <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
 </head>
 
 <body>
@@ -257,11 +259,41 @@
                 document.getElementsByClassName("wordStyle")[0].innerHTML = wordStyle;
                 document.getElementsByClassName("unit")[0].innerHTML = unit;
                 document.getElementsByClassName("msgCodeImg")[0].src = msgCodeImg;
+                downloadPDF();
             }
         }
     }
 
     getData(getUrlParam("j").toLowerCase());
+
+
+    async function downloadPDF() {
+        const { jsPDF } = window.jspdf;
+
+        const element = document.getElementById("ce");
+
+        // 把 div 转成 canvas
+        const canvas = await html2canvas(element, {
+            scale: 2,   // 清晰度
+            useCORS: true
+        });
+
+        const imgData = canvas.toDataURL("image/png");
+
+        // 创建 PDF
+        const pdf = new jsPDF({
+            orientation: "portrait",
+            unit: "mm",
+            format: "a4"
+        });
+
+        const imgWidth = 210; // A4宽度
+        const imgHeight = (canvas.height * imgWidth) / canvas.width;
+
+        pdf.addImage(imgData, "PNG", 0, 0, imgWidth, imgHeight);
+        pdf.save("证书.pdf");
+    }
+
 
 </script>
 
