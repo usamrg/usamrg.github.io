@@ -15,6 +15,7 @@
         body {
             font-family: 'SourceHanSansCN-Regular', sans-serif;
         }
+
         .ce {
             width: 29.64cm;
             height: 20.96cm;
@@ -276,28 +277,31 @@
 
         const element = document.getElementById("ce");
 
-        // 把 div 转成 canvas
         const canvas = await html2canvas(element, {
-            scale: 10,   // 清晰度
+            scale: 3,   // 高清
             useCORS: true
         });
 
         const imgData = canvas.toDataURL("image/png");
 
-        // 创建 PDF
+        // 自定义尺寸（mm）
         const pdf = new jsPDF({
-            orientation: "portrait",
+            orientation: "landscape", // 横向（因为宽 > 高）
             unit: "mm",
-            format: "a4"
+            format: [296.4, 209.6]
         });
 
-        const imgWidth = 210; // A4宽度
-        const imgHeight = (canvas.height * imgWidth) / canvas.width;
+        // 图片铺满 PDF
+        pdf.addImage(imgData, "PNG", 0, 0, 296.4, 209.6);
 
-        pdf.addImage(imgData, "PNG", 0, 0, imgWidth, imgHeight);
         pdf.save("证书.pdf");
     }
 
+
+</script>
+
+
+<script>
 
 </script>
 
