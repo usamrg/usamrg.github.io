@@ -163,92 +163,106 @@
 
 
 </body>
- <script src="./js/moment.min.js"></script>
-    <script src="./js/jr-qrcode.js"></script>
-    <script>
+<script src="./js/moment.min.js"></script>
+<script src="./js/jr-qrcode.js"></script>
+<script>
 
-        function getUrlParam(name){
-            var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
-            var r = window.location.search.substr(1).match(reg);
-            if(r != null) {
-                return decodeURI(r[2]);
-            }
-            return null;
+    function getUrlParam(name) {
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+        var r = window.location.search.substr(1).match(reg);
+        if (r != null) {
+            return decodeURI(r[2]);
         }
+        return null;
+    }
 
-        function getJsonParam(json,name){
-            return json[name];
-        }
+    function getJsonParam(json, name) {
+        return json[name];
+    }
 
-        function getData(jsonName){
+    function getData(jsonName) {
 
-            var url = "./json/"+jsonName+".json";
-            var request = new XMLHttpRequest();
+        var url = "./json/" + jsonName + ".json";
+        var request = new XMLHttpRequest();
 
-            request.open("get",url);
-            request.send(null);
-            request.onload = function (){
-                if (request.status === 200){
+        request.open("get", url);
+        request.send(null);
+        request.onload = function () {
+            if (request.status === 200) {
 
-                    var title;//标题
-                    var divTitle; //div标题
-                    var certImg; //头像
-                    var idNum; //身份证号
-                    var cardName; //名字
-                    var jobType; //作业类别（电工作业）
-                    var gender; //性别
-                    var operItem; //操作项目（低压电工作业）
-                    var firstTime; //初领日期（2022-01-15）
-                    var validity; //有效期（2022-01-15至2028-01-14）
-                    var againAuditTime; //复审日期（2022-01-15前）
-                    var unit; //签发机关 （湖北省应急管理厅）
-                    var msgCodeImg;
-                    var wordStyle; //复审日期2（备注：本证书应于2025-01-14前进行复审）
+                var title;//标题
+                var divTitle; //div标题
+                var certImg; //头像
+                var idNum; //身份证号
+                var cardName; //名字
+                var jobType; //作业类别（电工作业）
+                var gender; //性别
+                var operItem; //操作项目（低压电工作业）
+                var firstTime; //初领日期（2022-01-15）
+                var validity; //有效期（2022-01-15至2028-01-14）
+                var againAuditTime; //复审日期（2022-01-15前）
+                var unit; //签发机关 （湖北省应急管理厅）
+                var msgCodeImg;
+                var wordStyle; //备注（备注：本证书应于2025-01-14前进行复审）
+                var reviewTime; //复审日期3（备注：本证书已于2025-01-14在湖北省应急管理厅完成复审。请于2028-01-14前进行延期换证。）
+                var reviewAddress; //复审地址（备注：请持本证书于2025-01-14前到湖北省应急管理厅进行复审。）
 
-                    var json = JSON.parse(request.responseText);
+                var json = JSON.parse(request.responseText);
 
-                    var me = getUrlParam("me");
-                    title = me?"我的证书":"扫码查询"
-                    divTitle= me?"我的证书":"证书扫码结果"
-                    idNum = "T"+(me?getJsonParam(json,"i"):getJsonParam(json,"i").replace(/(\w{6})\w*(\w{4})/, '$1********$2'));
-                    cardName = getJsonParam(json,"n")
-                    jobType = getJsonParam(json,"j");
-                    gender = getJsonParam(json,"g")==="1"?"男":"女";
-                    operItem = getJsonParam(json,"o");
-                    unit = getJsonParam(json,"u");
-                    certImg = getJsonParam(json,"c");
-                    //开始算时间
-                    firstTime = getJsonParam(json,"t");
-                    var date = new Date(firstTime).getTime();
-                    validity = firstTime+"至"+moment(new Date(date+(86400000*365*6))).format('YYYY-MM-DD');
-                    var reexamineTime = moment(new Date(date+(86400000*365*3))).format('YYYY-MM-DD');
-                    againAuditTime = reexamineTime+"前"
-                    wordStyle = "备注：本证书应于"+reexamineTime+"前进行复审";
-                    //结束算时间
-
-                    //二维码
-                    var codeUrl = window.location.protocol+"//"+window.location.host+"?j="+jsonName;
-                    msgCodeImg = jrQrcode.getQrBase64(codeUrl);
-
-                    document.title = title;
-                    //document.getElementsByClassName("result")[0].innerHTML = divTitle;
-                    document.getElementsByClassName("certImg")[0].src = certImg;
-                    document.getElementsByClassName("numstyle")[0].innerHTML = idNum;
-                    document.getElementsByClassName("namestyle")[0].innerHTML = cardName;
-                    document.getElementsByClassName("jobtype")[0].innerHTML = jobType;
-                    document.getElementsByClassName("gender")[0].innerHTML = gender;
-                    document.getElementsByClassName("operItem")[0].innerHTML = operItem;
-                    document.getElementsByClassName("firstTime")[0].innerHTML = firstTime;
-                    document.getElementsByClassName("validity")[0].innerHTML = validity;
-                    document.getElementsByClassName("againAuditTime")[0].innerHTML = againAuditTime;
-                    document.getElementsByClassName("wordStyle")[0].innerHTML = wordStyle;
-                    document.getElementsByClassName("unit")[0].innerHTML = unit;
-                    document.getElementsByClassName("msgCodeImg")[0].src = msgCodeImg;
+                var me = getUrlParam("me");
+                title = me ? "我的证书" : "扫码查询"
+                divTitle = me ? "我的证书" : "证书扫码结果"
+                idNum = "T" + (me ? getJsonParam(json, "i") : getJsonParam(json, "i").replace(/(\w{6})\w*(\w{4})/, '$1********$2'));
+                cardName = getJsonParam(json, "n")
+                jobType = getJsonParam(json, "j");
+                gender = getJsonParam(json, "g") === "1" ? "男" : "女";
+                operItem = getJsonParam(json, "o");
+                unit = getJsonParam(json, "u");
+                certImg = getJsonParam(json, "c");
+                //开始算时间
+                firstTime = getJsonParam(json, "t");
+                var date = new Date(firstTime).getTime();
+                var endTime = moment(new Date(date + (86400000 * 365 * 6))).format('YYYY-MM-DD');
+                validity = firstTime + "至" + endTime;
+                var reexamineTime = moment(new Date(date + (86400000 * 365 * 3))).format('YYYY-MM-DD');
+                againAuditTime = reexamineTime + "前"
+                //结束算时间
+                //备注
+                if (getJsonParam(json, "f") && getJsonParam(json, "l")) {
+                    reviewTime = getJsonParam(json, "f");
+                    reviewAddress = getJsonParam(json, "l");
+                    wordStyle = "备注：本证书已于" + reviewTime + "在" + reviewAddress + "完成复审。请于" + endTime + "前进行延期换证。";
+                } else {
+                    wordStyle = "备注：本证书应于" + reexamineTime + "前进行复审";
                 }
+
+
+
+
+                //二维码
+                var codeUrl = window.location.protocol + "//" + window.location.host + "?j=" + jsonName;
+                msgCodeImg = jrQrcode.getQrBase64(codeUrl);
+
+                document.title = title;
+                //document.getElementsByClassName("result")[0].innerHTML = divTitle;
+                document.getElementsByClassName("certImg")[0].src = certImg;
+                document.getElementsByClassName("numstyle")[0].innerHTML = idNum;
+                document.getElementsByClassName("namestyle")[0].innerHTML = cardName;
+                document.getElementsByClassName("jobtype")[0].innerHTML = jobType;
+                document.getElementsByClassName("gender")[0].innerHTML = gender;
+                document.getElementsByClassName("operItem")[0].innerHTML = operItem;
+                document.getElementsByClassName("firstTime")[0].innerHTML = firstTime;
+                document.getElementsByClassName("validity")[0].innerHTML = validity;
+                document.getElementsByClassName("againAuditTime")[0].innerHTML = againAuditTime;
+                document.getElementsByClassName("wordStyle")[0].innerHTML = wordStyle;
+                document.getElementsByClassName("unit")[0].innerHTML = unit;
+                document.getElementsByClassName("msgCodeImg")[0].src = msgCodeImg;
             }
         }
+    }
 
-        getData(getUrlParam("j").toLowerCase());
-        
-    </script>
+    getData(getUrlParam("j").toLowerCase());
+
+</script>
+
 </html>
