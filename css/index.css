@@ -135,10 +135,11 @@ body{
     z-index: 999;
 }
 .wordStyle {
-    font-size: 4vw;
+    font-size: 3.9vw;
     display: inline-block;
     text-align: left;
     margin-top: 1.2vw;
+    padding-right: 2.5vw;
 }
 .bottom {
     margin-bottom: 0;
