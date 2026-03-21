@@ -193,6 +193,7 @@
 
                 var title;//标题
                 var divTitle; //div标题
+                var ceno; //证书编号
                 var certImg; //头像
                 var idNum; //身份证号
                 var cardName; //名字
@@ -214,6 +215,7 @@
                 title = me ? "我的证书" : "扫码查询"
                 divTitle = me ? "我的证书" : "证书扫码结果"
                 idNum = "T" + (me ? getJsonParam(json, "i") : getJsonParam(json, "i").replace(/(\w{6})\w*(\w{4})/, '$1********$2'));
+                ceno = getJsonParam(json, "a");
                 cardName = getJsonParam(json, "n")
                 jobType = getJsonParam(json, "j");
                 gender = getJsonParam(json, "g") === "1" ? "男" : "女";
@@ -246,6 +248,7 @@
 
                 document.title = title;
                 //document.getElementsByClassName("result")[0].innerHTML = divTitle;
+                document.getElementsByClassName("ceno")[0].innerHTML = certImg;
                 document.getElementsByClassName("certImg")[0].src = certImg;
                 document.getElementsByClassName("numstyle")[0].innerHTML = idNum;
                 document.getElementsByClassName("namestyle")[0].innerHTML = cardName;
