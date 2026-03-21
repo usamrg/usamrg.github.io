@@ -138,7 +138,6 @@
             line-height: 0.9cm;
         }
     </style>
-    <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
 </head>
 
@@ -273,37 +272,32 @@
     getData(getUrlParam("j").toLowerCase());
 
 
+
     async function downloadPDF() {
         const { jsPDF } = window.jspdf;
 
-        const element = document.getElementById("ce");
-
-        const canvas = await html2canvas(element, {
-            scale: 3,   // 高清
-            useCORS: true
-        });
-
-        const imgData = canvas.toDataURL("image/png");
-
-        // 自定义尺寸（mm）
         const pdf = new jsPDF({
-            orientation: "landscape", // 横向（因为宽 > 高）
             unit: "mm",
-            format: [296.4, 209.6]
+            format: [296.4, 209.6], // 你的尺寸
+            orientation: "landscape"
         });
 
-        // 图片铺满 PDF
-        pdf.addImage(imgData, "PNG", 0, 0, 296.4, 209.6);
+        await pdf.html(document.getElementById("ce"), {
+            x: 0,
+            y: 0,
+            width: 296.4,   // 关键：控制缩放
+            windowWidth: 1200 // 对应你的div宽度
+        });
 
         pdf.save("证书.pdf");
     }
 
-
 </script>
 
 
-<script>
 
-</script>
+
+
+
 
 </html>
