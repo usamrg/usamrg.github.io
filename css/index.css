@@ -139,7 +139,7 @@ body{
     display: inline-block;
     text-align: left;
     margin-top: 1.2vw;
-    padding-right: 2.5vw;
+    /* padding-right: 2.5vw; */
 }
 .bottom {
     margin-bottom: 0;
